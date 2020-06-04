@@ -1,0 +1,24 @@
+{
+  "name": "weberyday-backend",
+  "version": "0.0.1",
+  "description": "weberyday Service backend develop",
+  "main": "index.js",
+  "repository": "https://github.com/insungsong/weberyday-backend",
+  "author": "weberyday Team",
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "dotenv": "^8.2.0",
+    "graphql-tools": "^6.0.7",
+    "graphql-yoga": "^1.18.3",
+    "merge-graphql-schemas": "^1.7.8",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "start": "nodemon --exec babel-node src/server.js"
+  }
+}
