@@ -23,6 +23,7 @@ type User {
   offender: [Report!]
   teamName: String
   rank: String!
+  Secret: Secret
   log: String
   ip: String
   createdAt: String
@@ -120,6 +121,12 @@ type Report {
   offender: User
   createdAt: String
   status: String!
+}
+
+type Secret {
+  id: ID!
+  secretCode: String
+  user: User
 }
 
 type KeepUser {

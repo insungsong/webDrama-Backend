@@ -19,6 +19,14 @@ export default {
         rank = "user"
       } = args;
 
+      const exist = await prisma.user({ email });
+
+      if (exist) {
+        throw Error(
+          "해당 email은 존재하는 이메일입니다. 다른 이메일의 사용을 부탁드립니다."
+        );
+      }
+
       const user = await prisma.createUser({
         email,
         username,
