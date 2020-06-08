@@ -1,0 +1,236 @@
+type User {
+  id: ID!
+  username: String
+  email: String!
+  posts: [Post!]
+  likes: [Like!]
+  comments: [Comment!]
+  sigInSecret: String
+  inflow: String!
+  ageRange: String
+  birthyear: String
+  birthday: String
+  certification: Boolean!
+  password: String
+  nickname: String
+  gender: String
+  watchPost: [Post!]
+  notification: [Notification!]
+  nEvent: Boolean!
+  subscription: [Post!]
+  status: String!
+  reports: [Report!]
+  offender: [Report!]
+  teamName: String
+  rank: String!
+  log: String
+  ip: String
+  createdAt: String
+  updatedAt: String
+}
+
+type Post {
+  id: ID!
+  teamName: User!
+  likes: [Like!]
+  episodes: [Episode!]
+  title: String!
+  description: String!
+  uploadDay: [String!]
+  thumnail: String!
+  category: [Category!]
+  subscriber: [User!]
+  watchUser: [User!]
+  broadcast: Boolean!
+  jokeCategory: JokeCategory
+  createdAt: String
+  updatedAt: String
+}
+
+type Episode {
+  id: ID!
+  likes: [Like!]
+  post: Post!
+  title: String!
+  thumname: String!
+  file: String!
+  comments: [Comment!]
+  hitCount: Int!
+  createdAt: String
+  updatedAt: String
+}
+
+type Like {
+  id: ID!
+  user: User!
+  post: Post
+  episode: Episode
+}
+
+type Comment {
+  id: ID!
+  user: User!
+  text: String!
+  episode: Episode!
+  createdAt: String
+  updateAt: String
+}
+
+type Category {
+  id: ID!
+  post: [Post!]
+  genre: String!
+}
+
+type JokeCategory {
+  id: ID!
+  title: String!
+  posts: [Post!]
+  orderBy: Int!
+}
+
+type Banner {
+  id: ID!
+  image: String!
+  url: String
+  upload: Boolean!
+  orderBy: Int!
+  uploadTime: String
+  downTime: String
+}
+
+type Notification {
+  id: ID!
+  url: String
+  title: String!
+  text: String!
+  users: [User!]
+  timeLimit: String
+  timeCreate: String
+}
+
+type Report {
+  id: ID!
+  user: User!
+  sCategory: String
+  cCategory: String
+  pCategory: String
+  file: String
+  text: String
+  offender: User
+  createdAt: String
+  status: String!
+}
+
+type KeepUser {
+  id: ID!
+  username: String
+  email: String!
+  posts: [KeepPost!]
+  likes: [KeepLike!]
+  comments: [KeepComment!]
+  sigInSecret: String
+  inflow: String
+  ageRange: String
+  birthyear: String
+  birthday: String
+  certification: Boolean
+  password: String
+  nickname: String
+  gender: String
+  watchPost: [KeepPost!]
+  nEvent: Boolean!
+  subscription: [KeepPost!]
+  status: String!
+  reports: [KeepReport!]
+  offender: [KeepReport!]
+  teamName: String
+  rank: String!
+  log: String
+  ip: String
+  createdAt: String
+  updatedAt: String
+}
+
+type KeepPost {
+  id: ID!
+  teamName: KeepUser!
+  likes: [KeepLike!]
+  episodes: [KeepEpisode!]
+  title: String!
+  description: String!
+  uploadDay: [String!]
+  thumnail: String!
+  category: [KeepCategory!]
+  subscriber: [KeepUser!]
+  watchUser: [KeepUser!]
+  broadcast: Boolean!
+  jokeCategory: KeepJokeCategory
+  createdAt: String
+  updatedAt: String
+}
+
+type KeepEpisode {
+  id: ID!
+  likes: [KeepLike!]
+  post: KeepPost!
+  title: String!
+  thumname: String!
+  file: String!
+  comments: [KeepComment!]
+  hitCount: Int!
+  createdAt: String
+  updatedAt: String
+}
+
+type KeepLike {
+  id: ID!
+  user: KeepUser!
+  post: KeepPost
+  episode: KeepEpisode
+}
+
+type KeepComment {
+  id: ID!
+  user: KeepUser!
+  text: String!
+  episode: KeepEpisode!
+  createdAt: String
+  updateAt: String
+}
+
+type KeepCategory {
+  id: ID!
+  post: [KeepPost!]
+  genre: String!
+}
+
+type KeepJokeCategory {
+  id: ID!
+  title: String!
+  posts: [KeepPost!]
+  orderBy: Int!
+}
+
+type KeepBanner {
+  id: ID!
+  image: String!
+  url: String
+  upload: Boolean!
+  orderBy: Int!
+  uploadTime: String
+  downTime: String
+}
+
+type KeepReport {
+  id: ID!
+  user: KeepUser!
+  sCategory: String
+  cCategory: String
+  pCategory: String
+  file: String
+  text: String
+  offender: KeepUser
+  createdAt: String
+  status: String!
+}
