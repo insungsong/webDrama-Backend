@@ -8,6 +8,7 @@ export default {
       //TO DO
       //front-end단에서 이메일 정규식을 잘 거쳐서 들어왔다는 가정하에 진행
 
+      //db상에서 email이 있는지 첫번째로 확인
       const exist = await prisma.user({ email });
       if (exist) {
         throw Error(
@@ -15,29 +16,30 @@ export default {
         );
       }
 
+      //secret Type Filed에 email이 있는지 확인하는작업
       try {
         const emailCheck = await prisma.secrets({ where: { email } });
-        console.log(emailCheck);
 
         if (emailCheck) {
-          const box = await prisma.deleteManySecrets({
+          await prisma.deleteManySecrets({
             email: emailCheck.email
           });
-          console.log("box", box);
         }
       } catch (e) {
-        console.log("Asdasd", e);
+        console.log(e);
       }
 
+      //secret Type Filed에 이메일이 없는지 확인이 되었다면, creatSecret을 실행함
       try {
-        //1.secretKey create(utils.js)
-        //2.prisma db create type Secret => secretkey create한것을 Secret Type filed secretCode input
         if (secretKey) {
+          //secretKey(랜덤의 6자리 숫자)이 Fun은 (utils.js)에 존재
+
           await prisma.createSecret({
             secretCode: secretKey,
             email
           });
 
+          // prisma.createSecret을 진행하고 나서, 해당 email을 가진 사람에게 sendGrid를 보냄
           await sendSecretMail(email, secretKey);
           return true;
         } else {
@@ -48,9 +50,9 @@ export default {
         return false;
       }
 
-      //3. sendGrid를 통해 해당 클라이언트 이메일에 secretCode sending
+      //3. sendGrid를 통해 해당 클라이언트 이메일에 secretCode sending => utils.js에 구현됨
 
-      //4. cofirmRequestSecret.js에서 클라이언트에보낸 secretKey db검증
+      //4. cofirmSecret.js에서 클라이언트에보낸 secretKey db검증
 
       //5.회원가입 폼으로 이동(front-end)
     }
