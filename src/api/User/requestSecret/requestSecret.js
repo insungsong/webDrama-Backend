@@ -17,6 +17,7 @@ export default {
       }
 
       //secret Type Filed에 email이 있는지 확인하는작업
+      //1번 발송한 이후에 생길수 있는 try catch문 (예외 상황)
       try {
         const emailCheck = await prisma.secrets({ where: { email } });
 
@@ -36,7 +37,7 @@ export default {
 
           await prisma.createSecret({
             secretCode: secretKey,
-            email
+            email //클라이언트가 입력한 email
           });
 
           // prisma.createSecret을 진행하고 나서, 해당 email을 가진 사람에게 sendGrid를 보냄
