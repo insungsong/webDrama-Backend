@@ -23,7 +23,7 @@ type User {
   offender: [Report!]
   teamName: String
   rank: String!
-  Secret: Secret
+  secret: Secret
   log: String
   ip: String
   createdAt: String
