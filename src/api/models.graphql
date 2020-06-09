@@ -125,8 +125,9 @@ type Report {
 
 type Secret {
   id: ID!
-  secretCode: String
+  secretCode: Int
   user: User
+  email: String
 }
 
 type KeepUser {
