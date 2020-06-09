@@ -1,4 +1,5 @@
 import { prisma } from "../../../../generated/prisma-client";
+import { secretKey, sendSecretMail } from "../../../utils";
 
 export default {
   Mutation: {
@@ -16,9 +17,12 @@ export default {
 
       try {
         const emailCheck = await prisma.secrets({ where: { email } });
+        console.log(emailCheck);
 
         if (emailCheck) {
-          const box = await prisma.deleteManySecrets({ email });
+          const box = await prisma.deleteManySecrets({
+            email: emailCheck.email
+          });
           console.log("box", box);
         }
       } catch (e) {
@@ -26,16 +30,15 @@ export default {
       }
 
       try {
-        //1.secretKey create
-        const secretKey = Math.floor(Math.random() * 1000000);
-
+        //1.secretKey create(utils.js)
         //2.prisma db create type Secret => secretkey create한것을 Secret Type filed secretCode input
-
         if (secretKey) {
           await prisma.createSecret({
             secretCode: secretKey,
             email
           });
+
+          await sendSecretMail(email, secretKey);
           return true;
         } else {
           throw Error("weberyday 관리자 측에 문의 바랍니다.");
@@ -44,6 +47,7 @@ export default {
         console.log(e);
         return false;
       }
+
       //3. sendGrid를 통해 해당 클라이언트 이메일에 secretCode sending
 
       //4. cofirmRequestSecret.js에서 클라이언트에보낸 secretKey db검증
