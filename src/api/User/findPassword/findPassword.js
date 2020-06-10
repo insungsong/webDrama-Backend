@@ -1,5 +1,5 @@
 import { prisma } from "../../../../generated/prisma-client";
-import { secretKey } from "../../../utils";
+import { sendSecretMail } from "../../../utils";
 
 export default {
   Query: {
@@ -22,12 +22,16 @@ export default {
   Mutation: {
     //Query문을 통해 존재하는 db를 이메일에 비밀코드를 발송한 후
     //secret Type 필드 한줄이 추가되는 Mutation data
+
     userSecretKeyUpdate: async (_, args) => {
       const { email } = args;
       const user = await prisma.user({ email });
       try {
         if (user) {
-          const newSecretCode = secretKey; //랜덤 숫자 6자리를 변수에 담음
+          const secretKey = Math.floor(Math.random() * 1000000);
+
+          var newSecretCode = secretKey; //랜덤 숫자 6자리를 변수에 담음
+          console.log(newSecretCode);
 
           //Type Secret을 생성할때, 필드중 하나인, user의 데이터Type이 User!때문에, user 필드의 리턴값을 User와 연결해야함
           await prisma.createSecret({
@@ -38,6 +42,13 @@ export default {
               }
             },
             secretCode: newSecretCode
+          });
+          //SendGrid
+          //await sendSecretMail(email, newSecretCode);
+
+          //클라이언트가 비밀코드를 재요청했을때 연결이 끊긴 Secrey Type 한줄 삭제 코드
+          await prisma.deleteManySecrets({
+            AND: [{ user: null }, { email: null }]
           });
 
           return true;

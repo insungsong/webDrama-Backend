@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer";
 import sgTransport from "nodemailer-sendgrid-transport";
 import "./env";
+import { AuthenticateJwt } from "./passport";
+import jwt from "jsonwebtoken";
 
 //secret Random Number Create
 export const secretKey = Math.floor(Math.random() * 1000000);
@@ -33,3 +35,6 @@ export const sendSecretMail = (address, secret) => {
   };
   return sendMail(email);
 };
+
+export const generateToken = (id) =>
+  jwt.sign({ id }, process.env.JWT_SECRET_KEY);

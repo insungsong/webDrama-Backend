@@ -1,9 +1,10 @@
 import { prisma } from "../../../../generated/prisma-client";
-import { secretKey, sendSecretMail } from "../../../utils";
+import { sendSecretMail } from "../../../utils";
 
 export default {
   Mutation: {
     requestSecret: async (_, args) => {
+      const secretKey = Math.floor(Math.random() * 1000000);
       const { email } = args;
       //TO DO
       //front-end단에서 이메일 정규식을 잘 거쳐서 들어왔다는 가정하에 진행
@@ -23,7 +24,10 @@ export default {
 
         if (emailCheck) {
           await prisma.deleteManySecrets({
-            email: emailCheck.email
+            OR: [
+              { email: emailCheck[0].email },
+              { AND: [{ email: null }, { user: null }] }
+            ]
           });
         }
       } catch (e) {

@@ -3,6 +3,7 @@ import schema from "./schema";
 import dotenv from "dotenv";
 import path from "path";
 import logger from "morgan";
+import { AuthenticateJwt } from "./passport";
 
 dotenv.config({ path: path.resolve(".env") });
 
@@ -13,6 +14,7 @@ const server = new GraphQLServer({
 });
 
 server.express.use(logger("dev"));
+server.express.use(AuthenticateJwt);
 
 server.start({ port: PORT }, () =>
   console.log(`🔥Listening on Server : http://loacalhost${PORT}🔥`)
