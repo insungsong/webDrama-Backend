@@ -1,20 +1,20 @@
 import { GraphQLServer } from "graphql-yoga";
 import schema from "./schema";
-import dotenv from "dotenv";
-import path from "path";
 import logger from "morgan";
-import { AuthenticateJwt } from "./passport";
+import { authenticateJwt } from "./passport";
+import { isAuthenticated } from "./middlewares";
 
-dotenv.config({ path: path.resolve(".env") });
+import "./env";
 
 const PORT = process.env.PORT || "4000";
 
 const server = new GraphQLServer({
-  schema
+  schema,
+  context: ({ request }) => ({ request, isAuthenticated })
 });
 
 server.express.use(logger("dev"));
-server.express.use(AuthenticateJwt);
+server.express.use(authenticateJwt);
 
 server.start({ port: PORT }, () =>
   console.log(`🔥Listening on Server : http://loacalhost${PORT}🔥`)

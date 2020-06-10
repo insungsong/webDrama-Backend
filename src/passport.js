@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import path from "path";
 import "./env";
 
+console.log(process.env.JWT_SECRET);
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 const jwtOptions = {
@@ -25,7 +26,7 @@ const verifyUser = async (payload, done) => {
   }
 };
 
-export const AuthenticateJwt = (req, res, next) => {
+export const authenticateJwt = (req, res, next) => {
   passport.authenticate("jwt", { session: false }, (err, user) => {
     if (user) {
       req.user = user;

@@ -1,3 +1,3 @@
 type Query {
-  signIn(email: String!, password: String!): Boolean!
+  signIn(email: String!, password: String!): String!
 }
