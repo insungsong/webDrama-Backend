@@ -1,0 +1,10 @@
+type Mutation {
+  uploadPost(
+    title: String!
+    description: String!
+    thumnail: String!
+    category: [String!]
+    broadcast: Boolean!
+    uploadDay: [String!]!
+  ): Boolean!
+}
