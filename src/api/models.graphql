@@ -53,7 +53,7 @@ type Episode {
   likes: [Like!]
   post: Post!
   title: String!
-  thumname: String!
+  thumnail: String!
   file: String!
   comments: [Comment!]
   hitCount: Int!

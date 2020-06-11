@@ -5,7 +5,6 @@ import dotenv from "dotenv";
 import path from "path";
 import "./env";
 
-console.log(process.env.JWT_SECRET);
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 const jwtOptions = {

@@ -1,0 +1,17 @@
+enum ACTIONS {
+  EDIT
+  DELETE
+}
+
+type Mutation {
+  editPost(
+    id: ID!
+    title: String!
+    description: String!
+    uploadDay: [String!]
+    thumnail: String!
+    category: [String!]
+    broadcast: Boolean!
+    action: ACTIONS!
+  ): Boolean!
+}
