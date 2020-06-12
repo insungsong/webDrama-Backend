@@ -14,6 +14,7 @@ export default {
         uploadDay
       } = args;
       const { user } = request;
+      console.log(user);
 
       //category로 부터 받아온 [value, value...]을 prisma에 connect하는 형식에 맞게 포장하는 코드
       var createCategoryArr = new Array();
@@ -26,7 +27,7 @@ export default {
       });
 
       try {
-        if (user) {
+        if (user && user.certification) {
           await prisma.createPost({
             teamName: {
               connect: {
@@ -47,6 +48,8 @@ export default {
           throw Error(
             "😞로그인 정보가 없습니다. 로그인 후 해당기능을 이용해주세요"
           );
+        } else if (user.certification === false) {
+          throw Error("😃작가 인증을 등록해주세요!");
         } else {
           throw Error(
             "👨🏻 💻직품을 생성할 수 없습니다. 관리자에게 문의하세요👨🏻 💻"

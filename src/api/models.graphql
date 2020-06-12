@@ -183,7 +183,7 @@ type KeepEpisode {
   likes: [KeepLike!]
   post: KeepPost!
   title: String!
-  thumname: String!
+  thumbnail: String!
   file: String!
   comments: [KeepComment!]
   hitCount: Int!

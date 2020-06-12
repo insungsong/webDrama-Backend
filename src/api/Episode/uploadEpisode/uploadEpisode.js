@@ -7,18 +7,16 @@ export default {
 
       const { postId, title, thumbnail, file } = args;
       const { user } = request;
-      console.log(postId);
 
       try {
         const checkPostOfUser = await prisma.$exists.user({
-          AND: [{ id: user.id }, { posts_some: [postId] }]
+          AND: [{ id: user.id }, { posts_some: { id: postId } }]
         });
         console.log(checkPostOfUser);
-
         if (checkPostOfUser) {
           //checkPostOfUser 의 조건이 맞는다면,
           await prisma.createEpisode({
-            post: { connect: { id: post } },
+            post: { connect: { id: postId } },
             title,
             thumbnail,
             file
