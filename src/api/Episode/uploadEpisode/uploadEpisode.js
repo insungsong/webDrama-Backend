@@ -5,20 +5,22 @@ export default {
     uploadEpisode: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
 
-      const { post, title, thumnail, file } = args;
+      const { postId, title, thumbnail, file } = args;
       const { user } = request;
+      console.log(postId);
 
       try {
         const checkPostOfUser = await prisma.$exists.user({
-          AND: [{ id: user.id }, { post }]
+          AND: [{ id: user.id }, { posts_some: [postId] }]
         });
+        console.log(checkPostOfUser);
 
         if (checkPostOfUser) {
           //checkPostOfUser 의 조건이 맞는다면,
           await prisma.createEpisode({
             post: { connect: { id: post } },
             title,
-            thumnail,
+            thumbnail,
             file
           });
           return true;

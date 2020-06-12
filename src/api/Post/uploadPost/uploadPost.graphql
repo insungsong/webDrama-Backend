@@ -2,7 +2,7 @@ type Mutation {
   uploadPost(
     title: String!
     description: String!
-    thumnail: String!
+    thumbnail: String!
     category: [String!]
     broadcast: Boolean!
     uploadDay: [String!]!

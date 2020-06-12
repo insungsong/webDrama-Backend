@@ -8,7 +8,7 @@ export default {
       const {
         title,
         description,
-        thumnail,
+        thumbnail,
         category,
         broadcast,
         uploadDay
@@ -35,7 +35,7 @@ export default {
             },
             title,
             description,
-            thumnail,
+            thumbnail,
             category: {
               connect: createCategoryArr
             },

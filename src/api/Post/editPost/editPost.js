@@ -13,7 +13,7 @@ export default {
         title,
         description,
         uploadDay,
-        thumnail,
+        thumbnail,
         category,
         broadcast,
         action
@@ -40,7 +40,7 @@ export default {
                 title,
                 description,
                 uploadDay: { set: uploadDay },
-                thumnail,
+                thumbnail,
                 category: {
                   connect: createCategoryArr
                 },

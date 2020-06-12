@@ -9,7 +9,7 @@ type Mutation {
     title: String!
     description: String!
     uploadDay: [String!]
-    thumnail: String!
+    thumbnail: String!
     category: [String!]
     broadcast: Boolean!
     action: ACTIONS!

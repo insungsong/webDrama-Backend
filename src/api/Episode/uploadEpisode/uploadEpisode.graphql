@@ -1,8 +1,8 @@
 type Mutation {
   uploadEpisode(
-    post: String!
+    postId: String!
     title: String!
-    thumnail: String!
+    thumbnail: String!
     file: String!
   ): Boolean!
 }
