@@ -1,0 +1,13 @@
+enum ACTIONS {
+  EDIT
+  DELETE
+}
+
+type Mutation {
+  editComment(
+    episodeId: String
+    commentId: String
+    text: String!
+    actions: ACTIONS!
+  ): Boolean!
+}

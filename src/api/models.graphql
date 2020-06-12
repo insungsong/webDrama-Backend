@@ -59,6 +59,7 @@ type Episode {
   hitCount: Int!
   createdAt: String
   updatedAt: String
+  report: [Report!]
 }
 
 type Like {
@@ -113,14 +114,14 @@ type Notification {
 type Report {
   id: ID!
   user: User!
-  sCategory: String
-  cCategory: String
-  pCategory: String
   file: String
   text: String
+  category: String!
+  categoryValue: String!
   offender: User
   createdAt: String
   status: String!
+  episode: Episode!
 }
 
 type Secret {

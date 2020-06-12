@@ -1,3 +1,8 @@
 type Mutation {
-  Hello(title: String!): String
+  editEpisode(
+    epsodeId: String!
+    title: String!
+    thumbnail: String!
+    file: String!
+  ): Boolean!
 }

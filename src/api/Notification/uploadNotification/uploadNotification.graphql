@@ -1,0 +1,9 @@
+type Mutation {
+  uploadNotification(
+    title: String
+    text: String!
+    timeCreate: String!
+    timeLimit: String!
+    url: String
+  ): Boolean!
+}

@@ -1,0 +1,16 @@
+enum ACTIONS {
+  SITE_REPORT
+  COMMENT_REPORT
+  POST_REPORT
+}
+
+type Mutation {
+  uploadReport(
+    file: String
+    text: String
+    offenderId: String
+    category: ACTIONS!
+    categoryValue: String!
+    episodeId: String
+  ): Boolean!
+}
