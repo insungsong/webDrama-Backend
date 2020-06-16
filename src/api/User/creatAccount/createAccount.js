@@ -15,7 +15,7 @@ export default {
         nickname,
         gender,
         nEvent,
-        status = "connect",
+        status = "CONNECT",
         rank = "user"
       } = args;
 

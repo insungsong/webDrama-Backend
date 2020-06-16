@@ -3,7 +3,7 @@ import { isAuthenticated } from "../../../middlewares";
 
 export default {
   Mutation: {
-    updateUser: async (_, args, { request }) => {
+    editUser: async (_, args, { request }) => {
       isAuthenticated(request);
       const { user } = request;
       try {

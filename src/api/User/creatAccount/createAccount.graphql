@@ -11,7 +11,7 @@ type Mutation {
     nickname: String
     gender: String
     nEvent: Boolean!
-    status: String!
+    status: String
     rank: String!
   ): User!
 }

@@ -6,11 +6,11 @@ enum ACTIONS {
 
 type Mutation {
   uploadReport(
-    file: String
-    text: String
-    offenderId: String
     category: ACTIONS!
     categoryValue: String!
+    offenderId: String
     episodeId: String
+    text: String
+    file: String
   ): Boolean!
 }

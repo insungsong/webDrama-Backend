@@ -1,0 +1,10 @@
+type Mutation {
+  uploadBanner(
+    image: String!
+    url: String
+    upload: Boolean!
+    orderBy: Int
+    uploadTime: String
+    downTime: String
+  ): Boolean!
+}

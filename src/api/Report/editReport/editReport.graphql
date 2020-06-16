@@ -1,3 +1,17 @@
+enum ACTIONS {
+  CHECKING
+  CHECKED
+  COMMENT_WARNING
+  POST_WARNING
+  COMMENT_BLACK_LIST
+  POST_BLACK_LIST
+}
+
 type Mutation {
-  editReport(reportId: String!, status: String!): Boolean!
+  editReport(
+    reportId: String!
+    offenderId: String
+    episodeId: String
+    status: ACTIONS!
+  ): Boolean!
 }

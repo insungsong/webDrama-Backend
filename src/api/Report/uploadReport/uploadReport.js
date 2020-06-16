@@ -32,11 +32,12 @@ export default {
               categoryValue,
               file,
               text,
-              status: "CONNECT"
+              status: "CHECKING"
             });
             return true;
           } else if (category === COMMENT_REPORT) {
             //TO DO : offenderId만으로 episode와 연결 없이 신고를 만들었는데 지금은 offenderId로만 연결하는 상태
+
             await prisma.createReport({
               user: {
                 connect: {
@@ -52,7 +53,7 @@ export default {
               categoryValue,
               file,
               text,
-              status: "CONNECT"
+              status: "CHECKING"
             });
             return true;
           } else if (category === POST_REPORT) {
@@ -71,7 +72,7 @@ export default {
               categoryValue,
               file,
               text,
-              status: "CONNECT"
+              status: "CHECKING"
             });
 
             return true;

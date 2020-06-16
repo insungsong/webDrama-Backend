@@ -1,5 +1,5 @@
 type Mutation {
-  updateUser(
+  editUser(
     username: String
     birthyear: String
     birthday: String
