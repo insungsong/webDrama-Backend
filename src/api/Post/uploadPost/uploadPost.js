@@ -19,12 +19,14 @@ export default {
       //category로 부터 받아온 [value, value...]을 prisma에 connect하는 형식에 맞게 포장하는 코드
       var createCategoryArr = new Array();
 
-      category.map((value) => {
-        var createCategoryObj = new Object();
+      if (category !== undefined) {
+        category.map((value) => {
+          var createCategoryObj = new Object();
 
-        createCategoryObj.id = value;
-        createCategoryArr.push(createCategoryObj);
-      });
+          createCategoryObj.id = value;
+          createCategoryArr.push(createCategoryObj);
+        });
+      }
 
       try {
         if (user && user.certification) {

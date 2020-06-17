@@ -12,7 +12,7 @@ export default {
         const checkPostOfUser = await prisma.$exists.user({
           AND: [{ id: user.id }, { posts_some: { id: postId } }]
         });
-        console.log(checkPostOfUser);
+
         if (checkPostOfUser) {
           //checkPostOfUser 의 조건이 맞는다면,
           await prisma.createEpisode({

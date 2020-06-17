@@ -1,3 +1,8 @@
+enum ACTIONS {
+  EDIT
+  DELETE
+}
+
 type Mutation {
   editUser(
     username: String
@@ -6,5 +11,6 @@ type Mutation {
     password: String
     nickname: String
     nEvent: Boolean
+    actions: ACTIONS!
   ): Boolean!
 }

@@ -4,10 +4,10 @@ enum ACTIONS {
 }
 
 type Mutation {
-  editComment(
-    episodeId: String
-    commentId: String
-    text: String
+  editCategory(
+    editCategoryId: String!
+    genre: String
+    postId: [String!]
     actions: ACTIONS!
   ): Boolean!
 }

@@ -1,0 +1,3 @@
+type Mutation {
+  uploadCategory(genre: String!, postId: [String!]): Boolean!
+}

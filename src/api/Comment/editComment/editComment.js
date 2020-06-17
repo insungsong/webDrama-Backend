@@ -28,8 +28,8 @@ export default {
       console.log(isteamName);
 
       try {
-        if (isWriter || user.rank === "master") {
-          if (actions === EDIT) {
+        if (isWriter || user.rank === "master" || isteamName) {
+          if (isWriter && actions === EDIT) {
             await prisma.updateComment({
               data: {
                 text
@@ -40,8 +40,8 @@ export default {
             });
             return true;
           } else if (
-            (actions === DELETE && isteamName) ||
-            (actions === DELETE && user.rank === "master")
+            actions === DELETE &&
+            (isteamName || user.rank === "master" || isWriter)
           ) {
             await prisma.deleteManyComments({
               id: commentId

@@ -1,11 +1,14 @@
 import { prisma } from "../../../../generated/prisma-client";
 
+const EDIT = "EDIT";
+const DELETE = "DELETE";
+
 export default {
   Mutation: {
     editEpisode: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
 
-      const { epsodeId, title, thumbnail, file } = args;
+      const { epsodeId, title, thumbnail, file, actions } = args;
       const { user } = request;
 
       const filterUser = await prisma.$exists.user({
@@ -17,16 +20,22 @@ export default {
 
       try {
         if (filterUser) {
-          await prisma.updateEpisode({
-            data: {
-              title,
-              thumbnail,
-              file
-            },
-            where: {
+          if (actions === EDIT) {
+            await prisma.updateEpisode({
+              data: {
+                title,
+                thumbnail,
+                file
+              },
+              where: {
+                id: epsodeId
+              }
+            });
+          } else {
+            await prisma.deleteEpisode({
               id: epsodeId
-            }
-          });
+            });
+          }
           return true;
         } else {
           throw Error(

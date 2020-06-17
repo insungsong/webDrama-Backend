@@ -1,8 +1,14 @@
+enum ACTIONS {
+  EDIT
+  DELETE
+}
+
 type Mutation {
   editEpisode(
     epsodeId: String!
     title: String!
     thumbnail: String!
     file: String!
+    actions: ACTIONS!
   ): Boolean!
 }

@@ -3,6 +3,7 @@ import { sendSecretMail } from "../../../utils";
 
 export default {
   Mutation: {
+    //인증된 이메일에 발송되는 SecretCode
     requestSecret: async (_, args) => {
       const secretKey = Math.floor(Math.random() * 1000000);
       const { email } = args;

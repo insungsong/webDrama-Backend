@@ -34,7 +34,6 @@ export default {
         status,
         rank
       });
-      console.log(user);
       return user;
     }
   }
