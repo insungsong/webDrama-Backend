@@ -2,6 +2,7 @@ enum ACTIONS {
   SITE_REPORT
   COMMENT_REPORT
   POST_REPORT
+  CHECKING
 }
 
 type Mutation {

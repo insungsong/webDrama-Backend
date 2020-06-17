@@ -26,8 +26,17 @@ export default {
 
           //배열안에 가장 마지막 요소의 orderBy를 구하라
           //가장 큰 orderBy값을 받기위한 변수 box
-          var biggerOrderBy;
-          if (bannerArr !== null) {
+          if (bannerArr.length === 0) {
+            await prisma.createBanner({
+              upload,
+              url,
+              orderBy: 1,
+              image,
+              uploadTime,
+              downTime
+            });
+          } else if (bannerArr.length !== 0) {
+            var biggerOrderBy;
             bannerArr.map((value) => {
               biggerOrderBy = value.orderBy;
               if (biggerOrderBy < value.orderBy) {

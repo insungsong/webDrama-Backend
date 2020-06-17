@@ -3,6 +3,7 @@ import { prisma } from "../../../../generated/prisma-client";
 const SITE_REPORT = "SITE_REPORT";
 const COMMENT_REPORT = "COMMENT_REPORT";
 const POST_REPORT = "POST_REPORT";
+const CHECKING = "CHECKING";
 
 export default {
   Mutation: {
@@ -32,7 +33,7 @@ export default {
               categoryValue,
               file,
               text,
-              status: "CHECKING"
+              status: CHECKING
             });
             return true;
           } else if (category === COMMENT_REPORT) {
@@ -53,7 +54,7 @@ export default {
               categoryValue,
               file,
               text,
-              status: "CHECKING"
+              status: CHECKING
             });
             return true;
           } else if (category === POST_REPORT) {
@@ -72,7 +73,7 @@ export default {
               categoryValue,
               file,
               text,
-              status: "CHECKING"
+              status: CHECKING
             });
 
             return true;

@@ -1,3 +1,4 @@
 type Mutation {
-  editJokeCategory(id: String, postId: [String!]!): Boolean!
+  oneEditJokeCategory(editJokeCategoryId: String, postId: [String!]!): Boolean!
+  arrEditJokeCategory(editJokeCategoryId: [String!], title: String!): Boolean!
 }
