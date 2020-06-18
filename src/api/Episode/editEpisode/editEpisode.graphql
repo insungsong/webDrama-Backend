@@ -5,7 +5,7 @@ enum ACTIONS {
 
 type Mutation {
   editEpisode(
-    epsodeId: String!
+    episodeId: String!
     title: String!
     thumbnail: String!
     file: String!

@@ -15,11 +15,21 @@ export default {
 
         if (checkPostOfUser) {
           //checkPostOfUser 의 조건이 맞는다면,
-          await prisma.createEpisode({
+          const currentEpisode = await prisma.createEpisode({
             post: { connect: { id: postId } },
             title,
             thumbnail,
             file
+          });
+
+          const episodeId = currentEpisode.id;
+
+          await prisma.createKeepEpisode({
+            post: { connect: { postId } },
+            title,
+            thumbnail,
+            file,
+            episodeId
           });
           return true;
         } else {

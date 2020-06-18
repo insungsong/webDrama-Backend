@@ -2,6 +2,7 @@ import { prisma } from "../../../../generated/prisma-client";
 
 export default {
   Mutation: {
+    //카테고리 안의 작품위치의 배열위치를 바꾸고 싶을때
     arrEditJokeCategory: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
       const { editJokeCategoryId } = args;
@@ -35,7 +36,7 @@ export default {
         return false;
       }
     },
-    //정보를 바꿀때는 정보만 바꾸기
+    //정보를 바꿀때는 정보만 바꾸기 => 하나의 카테고리의 정보만 바꾼다.
     oneEditJokeCategory: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
       const { editJokeCategoryId, title, postId } = args;

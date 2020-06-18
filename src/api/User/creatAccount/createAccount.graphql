@@ -6,7 +6,7 @@ type Mutation {
     ageRange: String
     birthyear: String
     birthday: String
-    certificaction: Boolean!
+    certificaction: Boolean
     password: String
     nickname: String
     gender: String

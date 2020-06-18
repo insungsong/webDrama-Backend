@@ -25,8 +25,6 @@ export default {
         posts_some: { episodes_some: { id: episodeId } }
       });
 
-      console.log(isteamName);
-
       try {
         if (isWriter || user.rank === "master" || isteamName) {
           if (isWriter && actions === EDIT) {
@@ -36,6 +34,19 @@ export default {
               },
               where: {
                 id: commentId
+              }
+            });
+
+            const currentKeepComment = await prisma.keepComment({
+              commentId
+            });
+
+            await prisma.updateKeepComment({
+              data: {
+                text
+              },
+              where: {
+                id: currentKeepComment.id
               }
             });
             return true;

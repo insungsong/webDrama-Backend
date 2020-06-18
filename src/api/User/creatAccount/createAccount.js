@@ -34,6 +34,23 @@ export default {
         status,
         rank
       });
+
+      const keepUser = await prisma.createKeepUser({
+        email,
+        username,
+        inflow,
+        ageRange,
+        birthyear,
+        birthday,
+        certification,
+        password,
+        nickname,
+        gender,
+        nEvent,
+        status,
+        rank
+      });
+
       return user;
     }
   }

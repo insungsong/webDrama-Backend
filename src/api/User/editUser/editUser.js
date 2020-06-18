@@ -32,6 +32,18 @@ export default {
               nEvent
             }
           });
+
+          await prisma.updateKeepUser({
+            where: { email: user.email },
+            data: {
+              username,
+              birthyear,
+              birthday,
+              password,
+              nickname,
+              nEvent
+            }
+          });
         } else {
           await prisma.deleteUser({
             id: user.id

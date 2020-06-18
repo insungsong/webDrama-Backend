@@ -9,7 +9,6 @@ export default {
         image,
         url,
         upload,
-        orderBy,
         uploadTime = new Date(),
         downTime = new Date()
       } = args;
@@ -26,6 +25,8 @@ export default {
 
           //배열안에 가장 마지막 요소의 orderBy를 구하라
           //가장 큰 orderBy값을 받기위한 변수 box
+
+          //배너 Type에 아무것도 생성되지 않았을 경우
           if (bannerArr.length === 0) {
             await prisma.createBanner({
               upload,
@@ -35,6 +36,8 @@ export default {
               uploadTime,
               downTime
             });
+
+            //배너 Type에 하나이상의 creat가 존재할때
           } else if (bannerArr.length !== 0) {
             var biggerOrderBy;
             bannerArr.map((value) => {
@@ -44,26 +47,16 @@ export default {
               }
             });
 
-            console.log(biggerOrderBy);
-
             const inputOrderByNumber = biggerOrderBy + 1;
-            console.log(inputOrderByNumber);
-
-            var orderByData = orderBy;
-            if (orderBy === undefined) {
-              orderByData = inputOrderByNumber;
-            }
 
             const newBanner = await prisma.createBanner({
               upload,
               url,
-              orderBy: orderByData,
+              orderBy: inputOrderByNumber,
               image,
               uploadTime,
               downTime
             });
-
-            console.log(newBanner);
           }
           return true;
         } else {

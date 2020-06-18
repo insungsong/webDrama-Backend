@@ -30,7 +30,7 @@ export default {
 
       try {
         if (user && user.certification) {
-          await prisma.createPost({
+          const currentPost = await prisma.createPost({
             teamName: {
               connect: {
                 id: user.id
@@ -43,6 +43,23 @@ export default {
               connect: createCategoryArr
             },
             broadcast,
+            uploadDay: { set: uploadDay }
+          });
+
+          const postId = currentPost.id;
+
+          //keepPost만들기
+          await prisma.createKeepPost({
+            teamName: {
+              connect: {
+                email: user.email
+              }
+            },
+            title,
+            description,
+            thumbnail,
+            broadcast,
+            postId,
             uploadDay: { set: uploadDay }
           });
           return true;
