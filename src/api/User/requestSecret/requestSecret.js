@@ -6,6 +6,7 @@ export default {
     //인증된 이메일에 발송되는 SecretCode
     requestSecret: async (_, args) => {
       const secretKey = Math.floor(Math.random() * 1000000);
+      const strSecretKey = String(secretKey);
       const { email } = args;
       //TO DO
       //front-end단에서 이메일 정규식을 잘 거쳐서 들어왔다는 가정하에 진행
@@ -23,7 +24,7 @@ export default {
       try {
         const emailCheck = await prisma.secrets({ where: { email } });
 
-        if (emailCheck) {
+        if (emailCheck.length !== 0) {
           await prisma.deleteManySecrets({
             OR: [
               { email: emailCheck[0].email },
@@ -37,11 +38,11 @@ export default {
 
       //secret Type Filed에 이메일이 없는지 확인이 되었다면, creatSecret을 실행함
       try {
-        if (secretKey) {
+        if (strSecretKey) {
           //secretKey(랜덤의 6자리 숫자)이 Fun은 (utils.js)에 존재
 
           await prisma.createSecret({
-            secretCode: secretKey,
+            secretCode: strSecretKey,
             email //클라이언트가 입력한 email
           });
 

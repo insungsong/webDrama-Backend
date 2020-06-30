@@ -5,7 +5,7 @@ export default {
     uploadEpisode: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
 
-      const { postId, title, thumbnail, file } = args;
+      const { postId, title, thumbnail, file, endTime } = args;
       const { user } = request;
 
       try {
@@ -19,7 +19,8 @@ export default {
             post: { connect: { id: postId } },
             title,
             thumbnail,
-            file
+            file,
+            endTime
           });
 
           const episodeId = currentEpisode.id;
@@ -29,11 +30,14 @@ export default {
             title,
             thumbnail,
             file,
-            episodeId
+            episodeId,
+            endTime
           });
           return true;
         } else {
-          throw Error("잘못된 방식의 접근입니다. 본인의 계정을 이용해주세요😎");
+          throw Error(
+            "잘못된 방식의 접근입니다. 작품의 연결이 잘못되었거나 또는 본인의 계정이 아닙니다.😎"
+          );
         }
       } catch (e) {
         console.log(e);

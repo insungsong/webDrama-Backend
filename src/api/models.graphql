@@ -4,6 +4,7 @@ type User {
   email: String!
   posts: [Post!]
   likes: [Like!]
+  unlikes: [Unlike!]
   comments: [Comment!]
   sigInSecret: String
   inflow: String!
@@ -14,7 +15,7 @@ type User {
   password: String
   nickname: String
   gender: String
-  watchPost: [Post!]
+  watchedEpisode: [String!]
   notification: [Notification!]
   nEvent: Boolean!
   subscription: [Post!]
@@ -22,9 +23,11 @@ type User {
   reports: [Report!]
   teamName: String
   rank: String!
+  agreePrivacy: Boolean
   secret: Secret
   commentWriteTimer: String
   postWriteTimer: String
+  viewdEpisode: [ViewedEpisodeRecord!]
   log: String
   ip: String
   createdAt: String
@@ -42,7 +45,6 @@ type Post {
   thumbnail: String!
   category: [Category!]
   subscriber: [User!]
-  watchUser: [User!]
   broadcast: Boolean!
   jokeCategory: JokeCategory
   createdAt: String
@@ -60,7 +62,16 @@ type Episode {
   hitCount: Int!
   createdAt: String
   updatedAt: String
+  endTime: Int!
+  viewed: [ViewedEpisodeRecord!]
   report: [Report!]
+}
+
+type ViewedEpisodeRecord {
+  id: ID!
+  user: User!
+  episode: Episode!
+  viewTime: String!
 }
 
 type Like {
@@ -68,6 +79,13 @@ type Like {
   user: User!
   post: Post
   episode: Episode
+  comment: Comment!
+}
+
+type Unlike {
+  id: ID!
+  user: User!
+  comment: Comment!
 }
 
 type Comment {
@@ -76,6 +94,8 @@ type Comment {
   text: String!
   episode: Episode!
   offender: [Report!]
+  likes: [Like!]
+  unlikes: [Unlike!]
   createdAt: String
   updateAt: String
 }
@@ -185,6 +205,7 @@ type KeepEpisode {
   comments: [KeepComment!]
   hitCount: Int!
   episodeId: String
+  endTime: Int!
   createdAt: String
   updatedAt: String
 }

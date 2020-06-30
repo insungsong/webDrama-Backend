@@ -9,6 +9,7 @@ type Mutation {
     title: String!
     thumbnail: String!
     file: String!
+    endTime: String!
     actions: ACTIONS!
   ): Boolean!
 }

@@ -1,0 +1,3 @@
+type Mutation {
+  uploadWatchedEpisode(episodeId: String!): Boolean!
+}

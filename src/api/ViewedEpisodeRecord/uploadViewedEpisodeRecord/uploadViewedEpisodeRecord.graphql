@@ -1,0 +1,3 @@
+type Mutation {
+  uploadViewdEpisodeRecord(episodeId: String!, viewTime: Int!): Boolean!
+}

@@ -14,44 +14,50 @@ export default {
         password,
         nickname,
         gender,
-        nEvent,
+        nEvent = false,
         status = "CONNECT",
-        rank = "user"
+        rank = "user",
+        agreePrivacy = false
       } = args;
 
-      const user = await prisma.createUser({
-        email,
-        username,
-        inflow,
-        ageRange,
-        birthyear,
-        birthday,
-        certification,
-        password,
-        nickname,
-        gender,
-        nEvent,
-        status,
-        rank
-      });
-
-      const keepUser = await prisma.createKeepUser({
-        email,
-        username,
-        inflow,
-        ageRange,
-        birthyear,
-        birthday,
-        certification,
-        password,
-        nickname,
-        gender,
-        nEvent,
-        status,
-        rank
-      });
-
-      return user;
+      try {
+        await prisma.createUser({
+          email,
+          username,
+          inflow,
+          ageRange,
+          birthyear,
+          birthday,
+          certification,
+          password,
+          nickname,
+          gender,
+          nEvent,
+          status,
+          rank,
+          agreePrivacy
+        });
+        return true;
+      } catch (e) {
+        console.log(e);
+        return false;
+      }
+      // const keepUser = await prisma.createKeepUser({
+      //   email,
+      //   username,
+      //   inflow,
+      //   ageRange,
+      //   birthyear,
+      //   birthday,
+      //   certification,
+      //   password,
+      //   nickname,
+      //   gender,
+      //   nEvent,
+      //   status,
+      //   rank,
+      //   agreePrivacy
+      // });
     }
   }
 };

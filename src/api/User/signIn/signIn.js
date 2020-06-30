@@ -2,7 +2,7 @@ import { prisma } from "../../../../generated/prisma-client";
 import { generateToken } from "../../../utils";
 
 export default {
-  Query: {
+  Mutation: {
     signIn: async (_, args) => {
       try {
         const { email, password } = args;
@@ -18,7 +18,7 @@ export default {
         }
       } catch (e) {
         console.log(e);
-        return "해당 계정의 아이디 또는 패스워드가 일치하지 않습니다. 확인부탁드립니다.";
+        return "";
       }
     }
   }

@@ -1,0 +1,3 @@
+type Mutation {
+  editViewedEpisodeRecord(episodeId: String!, viewTime: Int!): Boolean!
+}

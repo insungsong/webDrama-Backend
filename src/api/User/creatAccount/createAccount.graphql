@@ -1,21 +1,18 @@
 type Mutation {
   createAccount(
-    email: String!
     username: String
+    email: String!
     inflow: String!
     ageRange: String
     birthyear: String
     birthday: String
-    certificaction: Boolean
+    certification: Boolean
     password: String
     nickname: String
     gender: String
     nEvent: Boolean!
     status: String
     rank: String!
-  ): User!
-}
-
-type Query {
-  something: String!
+    agreePrivacy: Boolean
+  ): Boolean!
 }

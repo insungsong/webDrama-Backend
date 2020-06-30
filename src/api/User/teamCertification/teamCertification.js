@@ -25,7 +25,7 @@ export default {
   },
   Mutation: {
     //본인 인증 API에서 인증후 넘겨주는 값에따라 해당 코드는 유동적임
-    teamnameUpload: async (_, args, { request }) => {
+    uploadTeamname: async (_, args, { request }) => {
       const { teamName } = args;
       const { user } = request;
       try {

@@ -2,7 +2,7 @@ import { prisma } from "../../../../generated/prisma-client";
 
 //이메일이랑 시크릿코드가 같은 사람이 인증을 하는 부분
 export default {
-  Query: {
+  Mutation: {
     confirmSecret: async (_, args) => {
       //requestSecret.js에서, 검증을 마치고 여기로 옴
       try {

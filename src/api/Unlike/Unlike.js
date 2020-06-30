@@ -1,10 +1,8 @@
 import { prisma } from "../../../generated/prisma-client";
 
 export default {
-  Like: {
+  Unlike: {
     user: ({ id }) => prisma.user({ id }).user(),
-    episode: ({ id }) => prisma.episode({ id }).episode(),
-    post: ({ id }) => prisma.episode({ id }).post(),
     comment: ({ id }) => prisma.comment({ id })
   }
 };

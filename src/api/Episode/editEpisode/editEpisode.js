@@ -8,7 +8,7 @@ export default {
     editEpisode: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
 
-      const { episodeId, title, thumbnail, file, actions } = args;
+      const { episodeId, title, thumbnail, file, endTime, actions } = args;
       const { user } = request;
 
       const filterUser = await prisma.$exists.user({
@@ -25,7 +25,8 @@ export default {
               data: {
                 title,
                 thumbnail,
-                file
+                file,
+                endTime
               },
               where: {
                 id: episodeId
@@ -36,7 +37,8 @@ export default {
               data: {
                 title,
                 thumbnail,
-                file
+                file,
+                endTime
               },
               where: {
                 episodeId

@@ -3,6 +3,7 @@ type Mutation {
     postId: String!
     title: String!
     thumbnail: String!
+    endTime: Int!
     file: String!
   ): Boolean!
 }

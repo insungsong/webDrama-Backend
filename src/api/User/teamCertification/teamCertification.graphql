@@ -3,5 +3,5 @@ type Query {
 }
 
 type Mutation {
-  teamnameUpload(teamName: String!): Boolean!
+  uploadTeamname(teamName: String!): Boolean!
 }

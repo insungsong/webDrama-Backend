@@ -4,7 +4,7 @@ export default {
   Mutation: {
     toggleLike: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
-      const { postId, episodeId } = args;
+      const { postId, episodeId, commentId } = args;
       const { user } = request;
 
       //user json에 like타입이 있는지 확인하는 코드
@@ -19,18 +19,33 @@ export default {
         AND: [{ user: { id: user.id } }, { post: { id: postId } }]
       };
 
+      const filterComment = {
+        AND: [{ user: { id: user.id } }, { comment: { id: commentId } }]
+      };
+
       if (userLiked !== undefined) {
         //user의 Like의 유무
         const episodeLiked = await prisma.$exists.like(filterEpisode);
         const postLiked = await prisma.$exists.like(filterPost);
+        const commentLiked = await prisma.$exists.like(filterComment);
 
-        if (episodeLiked && !postLiked) {
+        //좋아요한 episode를 다시 누른경우, 즉 좋아요 취소
+        if (episodeLiked && !postLiked && !commentLiked) {
           await prisma.deleteManyLikes(filterEpisode);
           return false;
-        } else if (!episodeLiked && postLiked) {
+        }
+        //좋아요한 Post 다시 누른경우, 즉 좋아요 취소
+        else if (!episodeLiked && postLiked && !commentLiked) {
           await prisma.deleteManyLikes(filterPost);
           return false;
-        } else if (episodeId) {
+        }
+        //comment 좋아요 취소기능
+        else if (commentLiked && !episodeLiked && !postLiked) {
+          await prisma.deleteManyLikes(filterComment);
+          return false;
+        }
+        //좋아요를 안눌러놨다가 누르는 경우
+        else if (episodeId) {
           await prisma.createLike({
             user: { connect: { id: user.id } },
             episode: { connect: { id: episodeId } }
@@ -40,6 +55,18 @@ export default {
           await prisma.createLike({
             user: { connect: { id: user.id } },
             post: { connect: { id: postId } }
+          });
+          return true;
+        }
+        //comment에 좋아요를 안해놓아서 좋아요를 누르는 기능
+        else if (commentId) {
+          await prisma.createLike({
+            user: { connect: { id: user.id } },
+            comment: {
+              connect: {
+                id: commentId
+              }
+            }
           });
           return true;
         }
