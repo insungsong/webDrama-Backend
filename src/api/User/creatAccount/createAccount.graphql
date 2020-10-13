@@ -1,3 +1,7 @@
+type Query {
+  isExistKeepUser(email: String!): Boolean!
+}
+
 type Mutation {
   createAccount(
     username: String

@@ -1,0 +1,3 @@
+type Query {
+  myLikesOfOneEpisode(episodeId: String!): [Comment]!
+}

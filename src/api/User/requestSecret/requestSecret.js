@@ -18,6 +18,12 @@ export default {
           "해당 email은 존재하는 이메일입니다. 다른 이메일의 사용을 부탁드립니다."
         );
       }
+      const isExist = await prisma.keepUser({ email });
+      if (isExist) {
+        throw Error(
+          "해당 email은 keepUser계정안에 존재하는 이메일입니다. 다른 이메일을 사용해주시길 바랍니다."
+        );
+      }
 
       //secret Type Filed에 email이 있는지 확인하는작업
       //1번 발송한 이후에 생길수 있는 try catch문 (예외 상황)
@@ -47,7 +53,7 @@ export default {
           });
 
           // prisma.createSecret을 진행하고 나서, 해당 email을 가진 사람에게 sendGrid를 보냄
-          await sendSecretMail(email, secretKey);
+          await sendSecretMail(email, strSecretKey);
           return true;
         } else {
           throw Error("weberyday 관리자 측에 문의 바랍니다.");

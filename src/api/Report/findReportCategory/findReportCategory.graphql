@@ -1,0 +1,3 @@
+type Query {
+  findEpisodeReportCategory(category: String!): [ReportCategory!]
+}

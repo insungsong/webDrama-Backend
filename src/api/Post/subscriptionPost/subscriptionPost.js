@@ -5,12 +5,13 @@ export default {
     subscriptionPost: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
       const { postId } = args;
+
       const { user } = request;
 
       try {
         //클라이언트가 구독중인지 아닌지를 체크하는 여부 확인
         const checkedSub = await prisma.$exists.user({
-          subscription_some: { id: postId }
+          AND: [{ id: user.id }, { subscription_some: { id: postId } }]
         });
 
         //구독하기를 해놨다가 취소하는 경우

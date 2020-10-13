@@ -1,3 +1,6 @@
 type Mutation {
   signIn(email: String!, password: String!): String!
+  adminSignIn(email: String!, password: String!): String!
+  signInfo(email: String!): User!
+  signUpLogin(email: String!, password: String!): [String!]
 }

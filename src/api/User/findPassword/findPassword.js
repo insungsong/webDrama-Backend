@@ -9,13 +9,13 @@ export default {
       const userEmail = await prisma.user({ email });
       try {
         if (userEmail) {
-          return true;
+          return userEmail;
         } else {
           throw Error("입력하신 이메일은 존재하지 않습니다.");
         }
       } catch (e) {
         console.log(e);
-        return false;
+        return null;
       }
     }
   },
@@ -29,9 +29,7 @@ export default {
       try {
         if (user) {
           const secretKey = Math.floor(Math.random() * 1000000);
-
-          var newSecretCode = secretKey; //랜덤 숫자 6자리를 변수에 담음
-          console.log(newSecretCode);
+          const strSecretKey = String(secretKey);
 
           //Type Secret을 생성할때, 필드중 하나인, user의 데이터Type이 User!때문에, user 필드의 리턴값을 User와 연결해야함
           await prisma.createSecret({
@@ -41,10 +39,10 @@ export default {
                 id: user.id
               }
             },
-            secretCode: newSecretCode
+            secretCode: strSecretKey
           });
           //SendGrid
-          //await sendSecretMail(email, newSecretCode);
+          await sendSecretMail(email, strSecretKey);
 
           //클라이언트가 비밀코드를 재요청했을때 연결이 끊긴 Secrey Type 한줄 삭제 코드
           await prisma.deleteManySecrets({
@@ -62,6 +60,7 @@ export default {
         return false;
       }
     },
+
     userPasswordUpdate: async (_, args) => {
       const { email, password } = args;
       const user = await prisma.user({ email });

@@ -1,0 +1,4 @@
+type Query {
+  searchNotification: [Notification!]
+  oneItemNotification(props: String): [Notification!]
+}

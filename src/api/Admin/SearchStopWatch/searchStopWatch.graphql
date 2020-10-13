@@ -1,0 +1,9 @@
+type Query {
+  allStopWatch: [User!]
+  searchStopWatch: [User!]
+}
+
+type Mutation {
+  userStatusUpdate(date: String!): Boolean!
+  userOfOneStatusUpdate(id: String!): Boolean!
+}

@@ -1,9 +1,11 @@
 type Mutation {
   uploadNotification(
-    title: String
+    title: String!
     text: String!
-    timeCreate: String!
-    timeLimit: String!
+    imgFile: String
+    s3ImgFile: String
+    timeCreate: String
+    timeLimit: String
     url: String
   ): Boolean!
 }

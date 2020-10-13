@@ -1,14 +1,13 @@
 enum ACTIONS {
   SITE_REPORT
   COMMENT_REPORT
-  POST_REPORT
+  EPISODE_REPORT
   CHECKING
 }
 
 type Mutation {
   uploadReport(
-    category: ACTIONS!
-    categoryValue: String!
+    reportCategory: String!
     offenderId: String
     episodeId: String
     text: String

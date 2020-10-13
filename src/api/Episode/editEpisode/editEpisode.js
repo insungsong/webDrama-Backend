@@ -8,7 +8,20 @@ export default {
     editEpisode: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
 
-      const { episodeId, title, thumbnail, file, endTime, actions } = args;
+      const {
+        episodeId,
+        title,
+        description,
+        thumbnail,
+        file,
+        s3ThumbnailId,
+        s3FileId,
+        endTime,
+        actions
+      } = args;
+
+      console.log(args);
+
       const { user } = request;
 
       const filterUser = await prisma.$exists.user({
@@ -24,8 +37,11 @@ export default {
             await prisma.updateEpisode({
               data: {
                 title,
+                description,
                 thumbnail,
                 file,
+                s3ThumbnailId,
+                s3FileId,
                 endTime
               },
               where: {
@@ -33,22 +49,24 @@ export default {
               }
             });
 
-            await prisma.updateKeepEpisode({
-              data: {
-                title,
-                thumbnail,
-                file,
-                endTime
-              },
-              where: {
-                episodeId
-              }
-            });
+            // await prisma.updateKeepEpisode({
+            //   data: {
+            //     title,
+            //     thumbnail,
+            //     description,
+            //     file,
+            //     endTime
+            //   },
+            //   where: {
+            //     episodeId
+            //   }
+            // });
           } else {
             await prisma.deleteEpisode({
               id: episodeId
             });
           }
+
           return true;
         } else {
           throw Error(

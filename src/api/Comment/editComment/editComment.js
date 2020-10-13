@@ -9,8 +9,8 @@ export default {
       isAuthenticated(request);
 
       const { episodeId, commentId, text, actions } = args;
+
       const { user } = request;
-      console.log(user.rank === "master");
 
       //현재 댓글의 ID
       const isWriterComment = await prisma.comment({ id: commentId });
@@ -20,6 +20,8 @@ export default {
         AND: [{ id: user.id }, { comments_some: { id: isWriterComment.id } }]
       });
 
+      console.log(isWriter);
+
       //댓글 작성자 이외에 작가도 댓글을 지울 수 있도록함
       const isteamName = await prisma.$exists.user({
         posts_some: { episodes_some: { id: episodeId } }
@@ -27,7 +29,10 @@ export default {
 
       try {
         if (isWriter || user.rank === "master" || isteamName) {
-          if (isWriter && actions === EDIT) {
+          if (
+            (isWriter && actions === EDIT) ||
+            (user.rank === "master" && actions === EDIT)
+          ) {
             await prisma.updateComment({
               data: {
                 text

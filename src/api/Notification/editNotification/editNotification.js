@@ -9,10 +9,12 @@ export default {
       isAuthenticated(request);
 
       const {
-        noficationId,
+        notificationId,
         title,
         text,
         url,
+        imgFile,
+        s3ImgFile,
         timeCreate,
         timeLimit,
         actions
@@ -42,22 +44,31 @@ export default {
         if (isMasterUser) {
           if (actions === EDIT) {
             await prisma.updateNotification({
-              where: { id: noficationId },
+              where: { id: notificationId },
               data: {
                 title,
                 text,
                 url,
+                imgFile,
+                s3ImgFile,
                 timeCreate,
                 timeLimit
               }
             });
             return true;
           } else if (actions === DELETE) {
-            await prisma.deleteNotification({ id: noficationId });
+            await prisma.deleteNotification({ id: notificationId });
+
             return true;
           } else {
             throw Error("😩개발자들 일 터졌다. 일 시작하자");
           }
+        } else {
+          await prisma.updateNotification({
+            notificationId,
+            data: { users: { disconnect: { id: user.id } } }
+          });
+          return true;
         }
       } catch (e) {
         console.log(e);

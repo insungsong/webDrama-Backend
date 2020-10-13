@@ -5,12 +5,15 @@ enum ACTIONS {
 
 type Mutation {
   editPost(
-    id: ID!
+    id: String!
     title: String!
     description: String!
     uploadDay: [String!]
     thumbnail: String!
-    category: [String!]
+    backgroundImage: String!
+    s3ThumbnailId: String
+    s3BackgroundImageId: String
+    category: String
     broadcast: Boolean!
     action: ACTIONS!
   ): Boolean!

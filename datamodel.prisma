@@ -1,0 +1,207 @@
+type User {
+  id: ID! @id
+  username: String
+  email: String! @unique
+  posts: [Post!] @relation(name:"PostOfUser", onDelete: CASCADE)
+  likes: [Like!] @relation(name:"LikesOfUser", onDelete: CASCADE)
+  unlikes: [Unlike!] @relation(name:"UnlikesOfUser",onDelete: CASCADE)
+  comments: [Comment!] @relation(name:"CommentsOfUser",onDelete: CASCADE)
+  sigInSecret: String
+  inflow: String!
+  birthday: String
+  certification: Boolean!
+  password: String
+  nickname: String
+  gender: String
+  watchedEpisode: [String!] @scalarList(strategy: RELATION)
+  notification :[Notification!] @relation(name:"NotificationOfUser" ,onDelete:SET_NULL)
+  nEvent: Boolean! @default(value:false)
+  subscription: [Post!] @relation(name:"PostSubOfUser", onDelete:SET_NULL)
+  status: String! @default(value:"CONNECT")
+  reports: [Report!] @relation(name:"ReportOfUser", onDelete: CASCADE)
+  reportedCount: Int @default(value:0)
+  stopDay: Int
+  stopWatch: String
+  teamName: String
+  secret: Secret @relation(link:TABLE, name:"SecretOfUser")
+  rank: String!
+  agreePrivacy: Boolean
+  viewedEpisode: [ViewedEpisodeRecord!] @relation(name:"ViewedOfUser" , onDelete: CASCADE)
+  log: String
+  ip: String
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt
+}
+
+type Post {
+  id: ID! @id
+  teamName: User! @relation(name:"PostOfUser", onDelete:SET_NULL)
+  likes: [Like!] @relation(name:"LikesOfPost",onDelete: CASCADE)
+  episodes: [Episode!] @relation(name:"EpisodeOfPost",onDelete: CASCADE)
+  title: String!
+  description: String!
+  uploadDay: [String!] @scalarList(strategy: RELATION)
+  thumbnail: String!
+  backgroundImage: String!
+  category: Category @relation(name:"CategoryOfPost",onDelete:SET_NULL)
+  subscriber: [User!] @relation(name:"PostSubOfUser",onDelete:SET_NULL)
+  broadcast: Boolean! @default(value:false)
+  jokeCategory: JokeCategory @relation(name:"JokeCategoryOfPost",onDelete:SET_NULL)
+  s3ThumbnailId: String
+  s3BackgroundImageId: String
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt
+}
+
+
+type Episode {
+  id: ID! @id
+  likes: [Like!] @relation(name:"LikesOfEpisode",onDelete: CASCADE)
+  post: Post! @relation(name:"EpisodeOfPost",onDelete:SET_NULL)
+  title: String!
+  description: String
+  thumbnail: String!
+  file: String!
+  comments: [Comment!] @relation(name:"CommentsOfEpisode",onDelete: CASCADE)
+  hitCount: Int! @default(value:0)
+  s3ThumbnailId: String
+  s3FileId: String
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt
+  endTime: Int
+  viewed: [ViewedEpisodeRecord!] @relation(name:"ViewedOfEpisode", onDelete: CASCADE)
+  report: [Report!] @relation(name:"ReportOfEpisode", onDelete: CASCADE)
+}
+
+type ViewedEpisodeRecord {
+  id: ID! @id
+  user: User! @relation(name:"ViewedOfUser")
+  episode: Episode! @relation(name:"ViewedOfEpisode")
+  viewTime: Int!
+}
+
+type Like {
+  id: ID! @id
+  user: User! @relation(name:"LikesOfUser",onDelete:SET_NULL)
+  post: Post @relation(name:"LikesOfPost",onDelete:SET_NULL)
+  episode: Episode @relation(name:"LikesOfEpisode",onDelete:SET_NULL)
+  comment: Comment @relation(name:"LikesOfComment")
+}
+
+type Unlike {
+  id: ID! @id
+  user: User! @relation(name:"UnlikesOfUser",onDelete:SET_NULL)
+  comment: Comment! @relation(name:"UnlikesOfComment")
+}
+
+type Comment {
+  id: ID! @id
+  user: User! @relation(name:"CommentsOfUser",onDelete:SET_NULL)
+  text: String!
+  episode: Episode! @relation(name:"CommentsOfEpisode",onDelete:SET_NULL)
+  offender: [Report!] @relation(name:"ReportOfComment", onDelete:SET_NULL)
+  likes: [Like!] @relation(name:"LikesOfComment", onDelete:CASCADE)
+  unlikes: [Unlike!] @relation(name:"UnlikesOfComment", onDelete:CASCADE)
+  createdAt: DateTime @createdAt
+  updateAt: DateTime @updateAt
+}
+
+type Category {
+  id: ID! @id
+  post: [Post!] @relation(name:"CategoryOfPost",onDelete:SET_NULL)
+  genre: String!
+}
+
+type JokeCategory {
+  id: ID! @id
+  title: String!
+  posts: [Post!] @relation(name:"JokeCategoryOfPost",onDelete:SET_NULL)
+  orderBy: Int!
+}
+
+type Banner {
+  id: ID! @id
+  image: String!
+  url: String
+  upload: Boolean! @default(value:false)
+  orderBy: Int!
+  s3ThumbnailId: String
+  uploadTime: DateTime!
+  downTime: DateTime!
+}
+
+type Notification {
+  id: ID! @id
+  url: String
+  title: String!
+  text: String!
+  imgFile: String
+  s3ImgFile: String
+  users: [User!] @relation(name:"NotificationOfUser",onDelete:SET_NULL)
+  timeLimit: DateTime 
+  timeCreate: DateTime
+}
+
+type ReportCategory {
+  id: ID! @id
+  category: String!
+  reason: String!
+  report: [Report!] @relation(name:"ReportCategoryOfReport")
+}
+
+type Report {
+  id: ID! @id
+  user: User! @relation(name:"ReportOfUser",onDelete:SET_NULL)
+  file: String
+  text: String
+  offender: Comment @relation(name:"ReportOfComment",onDelete:SET_NULL)
+  createdAt: DateTime @createdAt
+  status: String!
+  episode: Episode @relation(name:"ReportOfEpisode")
+  reportCategory: ReportCategory! @relation(name:"ReportCategoryOfReport")
+}
+
+type Secret {
+  id: ID! @id
+  secretCode: String
+  email: String
+  user: User @relation(name:"SecretOfUser")
+}
+
+type KeepUser {
+  id: ID! @id
+  username: String
+  email: String! @unique
+  comments: [KeepComment!] @relation(name:"KeepCommentsOfKeepUser",onDelete: CASCADE)
+  sigInSecret: String
+  inflow: String
+  birthday: String
+  certification: Boolean
+  password: String
+  nickname: String
+  gender: String
+  nEvent: Boolean! @default(value:false)
+  status: String! @default(value:"CONNECT")
+  agreePrivacy: Boolean
+  teamName: String
+  rank: String!
+  log: String
+  ip: String
+  signOutReason: String
+  createdAt: DateTime @createdAt
+  updatedAt: DateTime @updatedAt
+}
+
+type KeepComment {
+  id: ID! @id
+  user: KeepUser! @relation(name:"KeepCommentsOfKeepUser",onDelete:SET_NULL)
+  text: String!
+  commentId : String! @unique
+  createdAt: DateTime @createdAt
+  updateAt: DateTime @updateAt
+}
+
+
+
+
+

@@ -1,0 +1,6 @@
+type Query {
+  allPost: [Post!]
+  oneOfPost(id: String!): Post!
+  guestOneOfPost(id: String!): Post!
+  searchPost(term: String!): [Post!]
+}

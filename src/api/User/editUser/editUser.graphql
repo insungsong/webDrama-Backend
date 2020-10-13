@@ -3,14 +3,23 @@ enum ACTIONS {
   DELETE
 }
 
+type Query {
+  findUser(password: String!): User!
+  findUserInfo: User!
+  findPost: User!
+}
+
 type Mutation {
   editUser(
+    email: String
     username: String
-    birthyear: String
     birthday: String
+    gender: String
     password: String
     nickname: String
     nEvent: Boolean
+    agreePrivacy: Boolean
+    signOutReason: String
     actions: ACTIONS!
   ): Boolean!
 }

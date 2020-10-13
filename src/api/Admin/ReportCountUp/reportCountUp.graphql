@@ -1,0 +1,9 @@
+type Mutation {
+  reportCountUp(
+    userId: String!
+    count: Int!
+    reportId: String
+    offenderId: String
+    reportCategoryValue: String
+  ): Boolean!
+}

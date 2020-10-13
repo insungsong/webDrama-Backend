@@ -9,24 +9,29 @@ export default {
         title,
         description,
         thumbnail,
+        backgroundImage,
         category,
         broadcast,
-        uploadDay
+        uploadDay,
+        s3ThumbnailId,
+        s3BackgroundImageId
       } = args;
+
       const { user } = request;
-      console.log(user);
+
+      //const objectCategory = new Object();
 
       //category로 부터 받아온 [value, value...]을 prisma에 connect하는 형식에 맞게 포장하는 코드
-      var createCategoryArr = new Array();
+      //var createCategoryArr = new Array();
 
-      if (category !== undefined) {
-        category.map((value) => {
-          var createCategoryObj = new Object();
+      // if (category !== undefined) {
+      //   category.map((value) => {
+      //     var createCategoryObj = new Object();
 
-          createCategoryObj.id = value;
-          createCategoryArr.push(createCategoryObj);
-        });
-      }
+      //     createCategoryObj.id = value;
+      //     createCategoryArr.push(createCategoryObj);
+      //   });
+      // }
 
       try {
         if (user && user.certification) {
@@ -39,29 +44,32 @@ export default {
             title,
             description,
             thumbnail,
+            backgroundImage,
+            s3ThumbnailId,
+            s3BackgroundImageId,
             category: {
-              connect: createCategoryArr
+              connect: { id: category }
             },
             broadcast,
             uploadDay: { set: uploadDay }
           });
-
-          const postId = currentPost.id;
 
           //keepPost만들기
-          await prisma.createKeepPost({
-            teamName: {
-              connect: {
-                email: user.email
-              }
-            },
-            title,
-            description,
-            thumbnail,
-            broadcast,
-            postId,
-            uploadDay: { set: uploadDay }
-          });
+          //const postId = currentPost.id;
+          // await prisma.createKeepPost({
+          //   teamName: {
+          //     connect: {
+          //       email: user.email
+          //     }
+          //   },
+          //   title,
+          //   description,
+          //   thumbnail,
+          // backgroundImage,
+          //   broadcast,
+          //   postId,
+          //   uploadDay: { set: uploadDay }
+          // });
           return true;
         } else if (!user) {
           throw Error(

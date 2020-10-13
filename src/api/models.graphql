@@ -9,7 +9,6 @@ type User {
   sigInSecret: String
   inflow: String!
   ageRange: String
-  birthyear: String
   birthday: String
   certification: Boolean!
   password: String
@@ -21,12 +20,13 @@ type User {
   subscription: [Post!]
   status: String!
   reports: [Report!]
+  reportedCount: Int
+  stopDay: Int
+  stopWatch: String
   teamName: String
   rank: String!
   agreePrivacy: Boolean
   secret: Secret
-  commentWriteTimer: String
-  postWriteTimer: String
   viewdEpisode: [ViewedEpisodeRecord!]
   log: String
   ip: String
@@ -36,14 +36,17 @@ type User {
 
 type Post {
   id: ID!
-  teamName: User!
+  teamName: User
   likes: [Like!]
   episodes: [Episode!]
   title: String!
   description: String!
   uploadDay: [String!]
   thumbnail: String!
-  category: [Category!]
+  backgroundImage: String!
+  s3ThumbnailId: String
+  s3BackgroundImageId: String
+  category: Category
   subscriber: [User!]
   broadcast: Boolean!
   jokeCategory: JokeCategory
@@ -56,13 +59,16 @@ type Episode {
   likes: [Like!]
   post: Post!
   title: String!
+  description: String
   thumbnail: String!
   file: String!
+  s3ThumbnailId: String
+  s3FileId: String
   comments: [Comment!]
   hitCount: Int!
   createdAt: String
   updatedAt: String
-  endTime: Int!
+  endTime: Int
   viewed: [ViewedEpisodeRecord!]
   report: [Report!]
 }
@@ -79,7 +85,7 @@ type Like {
   user: User!
   post: Post
   episode: Episode
-  comment: Comment!
+  comment: Comment
 }
 
 type Unlike {
@@ -119,18 +125,28 @@ type Banner {
   url: String
   upload: Boolean!
   orderBy: Int!
+  s3ThumbnailId: String
   uploadTime: String
   downTime: String
 }
 
 type Notification {
   id: ID!
-  url: String
   title: String!
   text: String!
+  url: String
+  imgFile: String
+  s3ImgFile: String
   users: [User!]
   timeLimit: String
   timeCreate: String
+}
+
+type ReportCategory {
+  id: ID!
+  category: String!
+  reason: String!
+  report: [Report!]
 }
 
 type Report {
@@ -138,12 +154,11 @@ type Report {
   user: User!
   file: String
   text: String
-  category: String!
-  categoryValue: String!
-  offender: User
-  createdAt: String
+  offender: Comment
+  episode: Episode
+  reportCategory: ReportCategory!
   status: String!
-  episode: Episode!
+  createdAt: String
 }
 
 type Secret {
@@ -162,7 +177,6 @@ type KeepUser {
   sigInSecret: String
   inflow: String
   ageRange: String
-  birthyear: String
   birthday: String
   certification: Boolean
   password: String
@@ -170,6 +184,7 @@ type KeepUser {
   gender: String
   watchPost: [KeepPost!]
   nEvent: Boolean!
+  agreePrivacy: Boolean
   subscription: [KeepPost!]
   status: String!
   teamName: String

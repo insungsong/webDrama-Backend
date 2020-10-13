@@ -3,7 +3,9 @@ import { prisma } from "../../../generated/prisma-client";
 export default {
   Comment: {
     user: ({ id }) => prisma.comment({ id }).user(),
-    episode: ({ id }) => prisma.comment({ id }).episode()
+    episode: ({ id }) => prisma.comment({ id }).episode(),
+    likes: ({ id }) => prisma.comment({ id }).likes(),
+    unlikes: ({ id }) => prisma.comment({ id }).unlikes()
   },
 
   KeepComment: {

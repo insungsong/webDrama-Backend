@@ -3,8 +3,13 @@ type Mutation {
     title: String!
     description: String!
     thumbnail: String!
-    category: [String!]
+    backgroundImage: String!
+    s3ThumbnailId: String
+    s3BackgroundImageId: String
+    s3ThumbnailIdVersionId: String
+    s3BackgroundImageIdVersionId: String
+    category: String
     broadcast: Boolean!
-    uploadDay: [String!]!
+    uploadDay: [String!]
   ): Boolean!
 }

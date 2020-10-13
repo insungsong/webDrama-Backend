@@ -5,12 +5,14 @@ enum ACTIONS {
 
 type Mutation {
   editNotification(
-    noficationId: String!
-    title: String!
-    text: String!
+    notificationId: String!
+    title: String
+    text: String
     url: String
-    timeCreate: String!
-    timeLimit: String!
+    imgFile: String
+    s3ImgFile: String
+    timeCreate: String
+    timeLimit: String
     actions: ACTIONS!
   ): Boolean!
 }

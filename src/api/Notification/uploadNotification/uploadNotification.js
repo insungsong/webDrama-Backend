@@ -4,7 +4,7 @@ export default {
   Mutation: {
     uploadNotification: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
-      const { title, text, timeCreate, timeLimit, url } = args;
+      const { title, text, url, imgFile, s3ImgFile } = args;
       const { user } = request;
 
       try {
@@ -12,6 +12,10 @@ export default {
         const isMasterUser = await prisma.$exists.user({
           AND: [{ id: user.id }, { rank: "master" }]
         });
+
+        if (!isMasterUser) {
+          throw Error("해당 계정은 관리자 계정이 아닙니다.");
+        }
 
         //회원들을 정보를 다 가지고옴
         const users = await prisma.users();
@@ -27,14 +31,21 @@ export default {
         });
 
         if (isMasterUser) {
+          if (title === "" || text === "") {
+            throw Error("title또는Text를 입력하셔야합니다.");
+          }
           await prisma.createNotification({
             title,
             text,
             url,
-            users: { connect: createNotificationArr },
-            timeCreate,
-            timeLimit
+            imgFile,
+            s3ImgFile,
+            users: { connect: createNotificationArr }
+            // timeCreate,
+            // timeLimit
           });
+        } else {
+          throw Error("해당 계정은 관리자 계정이 아닙니다.");
         }
         return true;
       } catch (e) {

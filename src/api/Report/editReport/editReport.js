@@ -90,9 +90,8 @@ export default {
                 await prisma.updateUser({
                   where: { id: offender[0].id },
                   data: {
-                    status: COMMENT_STOP,
+                    status: COMMENT_STOP
                     //new Date()부분을 미래에 달력 api로 대체해야함
-                    commentWriteTimer: JSON.stringify(new Date())
                   }
                 });
               }
@@ -125,8 +124,7 @@ export default {
                     id: offenderTeam[0].id
                   },
                   data: {
-                    status: POST_STOP,
-                    postWriteTimer: JSON.stringify(new Date())
+                    status: POST_STOP
                   }
                 });
               }
@@ -138,8 +136,7 @@ export default {
               await prisma.updateUser({
                 where: { id: user[0].id },
                 data: {
-                  status: COMMENT_STOP,
-                  commentWriteTimer: JSON.stringify(new Date())
+                  status: COMMENT_STOP
                 }
               });
 
@@ -154,8 +151,7 @@ export default {
               await prisma.updateUser({
                 where: { id: user[0].id },
                 data: {
-                  status: POST_STOP,
-                  postWriteTimer: JSON.stringify(new Date())
+                  status: POST_STOP
                 }
               });
 

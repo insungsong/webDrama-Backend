@@ -7,9 +7,12 @@ type Mutation {
   editEpisode(
     episodeId: String!
     title: String!
+    description: String!
     thumbnail: String!
     file: String!
-    endTime: String!
+    s3ThumbnailId: String
+    s3FileId: String
+    endTime: Int
     actions: ACTIONS!
   ): Boolean!
 }

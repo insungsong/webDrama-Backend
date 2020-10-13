@@ -1,7 +1,7 @@
 type Query {
-  searchTeamname(teamName: String!): Boolean!
+  searchTeamName(teamName: String!): Boolean!
 }
 
 type Mutation {
-  uploadTeamname(teamName: String!): Boolean!
+  uploadTeamName(teamName: String!): Boolean!
 }

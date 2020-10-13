@@ -5,7 +5,16 @@ export default {
     uploadEpisode: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
 
-      const { postId, title, thumbnail, file, endTime } = args;
+      const {
+        postId,
+        title,
+        description,
+        thumbnail,
+        file,
+        s3ThumbnailId,
+        s3FileId,
+        endTime
+      } = args;
       const { user } = request;
 
       try {
@@ -15,24 +24,28 @@ export default {
 
         if (checkPostOfUser) {
           //checkPostOfUser 의 조건이 맞는다면,
-          const currentEpisode = await prisma.createEpisode({
+
+          await prisma.createEpisode({
             post: { connect: { id: postId } },
             title,
+            description,
             thumbnail,
             file,
+            s3ThumbnailId,
+            s3FileId,
             endTime
           });
 
-          const episodeId = currentEpisode.id;
-
-          await prisma.createKeepEpisode({
-            post: { connect: { postId } },
-            title,
-            thumbnail,
-            file,
-            episodeId,
-            endTime
-          });
+          //const episodeId = currentEpisode.id;
+          // await prisma.createKeepEpisode({
+          //   post: { connect: { postId } },
+          //   title,
+          //   thumbnail,
+          //   description,
+          //   file,
+          //   episodeId,
+          //   endTime
+          // });
           return true;
         } else {
           throw Error(

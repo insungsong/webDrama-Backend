@@ -5,17 +5,20 @@ import { prisma } from "../../../../generated/prisma-client";
 export default {
   Query: {
     //작품을 올리기위한 작가인증 3단계중, 팀명 업데이트
-    searchTeamname: async (_, args) => {
+    searchTeamName: async (_, args) => {
       const { teamName } = args;
+
       try {
         const checkTeamname = await prisma.users({
           where: { teamName }
         });
-
+        if (teamName === "") {
+          return false;
+        }
         if (checkTeamname.length === 0) {
-          throw Error("사용가능한 팀명입니다😇");
+          return true;
         } else {
-          throw Error("중복된 팀명입니다😭");
+          return false;
         }
       } catch (e) {
         console.log(e);
@@ -25,7 +28,7 @@ export default {
   },
   Mutation: {
     //본인 인증 API에서 인증후 넘겨주는 값에따라 해당 코드는 유동적임
-    uploadTeamname: async (_, args, { request }) => {
+    uploadTeamName: async (_, args, { request }) => {
       const { teamName } = args;
       const { user } = request;
       try {

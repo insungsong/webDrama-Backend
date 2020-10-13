@@ -6,10 +6,9 @@ export default {
       isAuthenticated(request);
       const { postId, episodeId, commentId } = args;
       const { user } = request;
-
       //user json에 like타입이 있는지 확인하는 코드
       const userLiked = await prisma.user({ id: user.id });
-
+      console.log(postId, episodeId, commentId);
       //user가 특정 Episode에 좋아요를 해둔것이 있는지 확인하기 위함
       const filterEpisode = {
         AND: [{ user: { id: user.id } }, { episode: { id: episodeId } }]
@@ -28,19 +27,19 @@ export default {
         const episodeLiked = await prisma.$exists.like(filterEpisode);
         const postLiked = await prisma.$exists.like(filterPost);
         const commentLiked = await prisma.$exists.like(filterComment);
-
+        console.log(episodeLiked, postLiked, commentLiked);
         //좋아요한 episode를 다시 누른경우, 즉 좋아요 취소
-        if (episodeLiked && !postLiked && !commentLiked) {
+        if (episodeLiked && episodeId) {
           await prisma.deleteManyLikes(filterEpisode);
           return false;
         }
         //좋아요한 Post 다시 누른경우, 즉 좋아요 취소
-        else if (!episodeLiked && postLiked && !commentLiked) {
+        else if (postLiked && postId) {
           await prisma.deleteManyLikes(filterPost);
           return false;
         }
         //comment 좋아요 취소기능
-        else if (commentLiked && !episodeLiked && !postLiked) {
+        else if (commentLiked && commentId) {
           await prisma.deleteManyLikes(filterComment);
           return false;
         }
