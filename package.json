@@ -46,5 +46,8 @@
     "build": "babel src -d build",
     "postbuild": "cd src && copy './api/**/*.graphql' '../build/api'",
     "start": "node build/server.js"
+  },
+  "engines": {
+    "node": "12.18.4"
   }
 }
