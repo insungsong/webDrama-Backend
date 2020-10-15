@@ -5,7 +5,7 @@ import { authenticateJwt } from "./passport";
 import { isAuthenticated } from "./middlewares";
 import "./env";
 
-const PORT = process.env.PORT || "4000";
+const PORT = process.env.PORT || 4000;
 
 const server = new GraphQLServer({
   schema,
@@ -15,6 +15,6 @@ const server = new GraphQLServer({
 server.express.use(logger("dev"));
 server.express.use(authenticateJwt);
 
-server.start({ port: PORT }, async () => {
+server.start({ port: PORT }, (e) => {
   console.log(`🔥Listening on Server : http://loacalhost${PORT}🔥`);
 });

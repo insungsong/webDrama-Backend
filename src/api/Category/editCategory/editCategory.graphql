@@ -7,7 +7,7 @@ type Mutation {
   editCategory(
     editCategoryId: String!
     genre: String
-    postId: [String!]
+    post: [String!]
     actions: ACTIONS!
   ): Boolean!
 }

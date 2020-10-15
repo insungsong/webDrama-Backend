@@ -6,7 +6,8 @@ type Mutation {
     upload: Boolean!
     uploadTime: String
     downTime: String
+    orderBy: Int!
   ): Boolean!
 
-  arrEditBanner(id: [String!]): Boolean!
+  deleteBanner(id: String!): Boolean!
 }

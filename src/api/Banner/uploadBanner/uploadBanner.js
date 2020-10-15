@@ -5,15 +5,9 @@ export default {
     uploadBanner: async (_, args, { request, isAuthenticated }) => {
       isAuthenticated(request);
 
-      const {
-        image,
-        url,
-        upload,
-        uploadTime = new Date(),
-        downTime = new Date()
-      } = args;
+      const { image, url, upload, uploadTime, downTime, s3ThumbnailId } = args;
       const { user } = request;
-
+      console.log(args);
       //마스터 계정인지 확인
       const isMasterUser = await prisma.$exists.user({
         AND: [{ id: user.id }, { rank: "master" }]
@@ -33,6 +27,7 @@ export default {
               url,
               orderBy: 1,
               image,
+              s3ThumbnailId,
               uploadTime,
               downTime
             });
@@ -54,6 +49,7 @@ export default {
               url,
               orderBy: inputOrderByNumber,
               image,
+              s3ThumbnailId,
               uploadTime,
               downTime
             });

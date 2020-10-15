@@ -1,4 +1,4 @@
-endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://weberyday-db-f0b32d9da1.herokuapp.com/weberyday/prod
 datamodel: datamodel.prisma
 
 generate:
